@@ -24,6 +24,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { findDescendantsFileItemsFromFsPath } from '../utils/tree'
 import { joinURL } from 'ufo'
 import { upperFirst } from 'scule'
+import { consola } from 'consola'
+
+const logger = consola.withTag('useContext')
 
 export const useContext = createSharedComposable((
   host: StudioHost,
@@ -119,7 +122,7 @@ export const useContext = createSharedComposable((
         await activeTree.value.draft.create(navigationDocumentFsPath, navigationDocument)
       }
       catch (e) {
-        console.warn(`[studio] Navigation document at path ${navigationDocumentFsPath} failed to create: ${e}`)
+        logger.warn(`Navigation document at path ${navigationDocumentFsPath} failed to create: ${e}`)
       }
 
       const rootDocument = await host.document.db.create(rootDocumentFsPath, `# ${upperFirst(folderName)} root file`)
